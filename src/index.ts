@@ -5,6 +5,8 @@ import { Scalar } from "@scalar/hono-api-reference";
 import { env } from "./config/env";
 import { errorHandler } from "./middleware/error-handler";
 import authRoutes from "./routes/auth.routes";
+import habitsRoutes from "./routes/habits.routes";
+import { startStreakCronJob } from "./jobs/streak-calculator";
 
 const app = new OpenAPIHono();
 
@@ -33,6 +35,7 @@ app.openAPIRegistry.registerComponent("securitySchemes", "bearerAuth", {
 });
 
 app.route("/api/v1/auth", authRoutes);
+app.route("/api/v1/habits", habitsRoutes);
 
 app.doc("/api/doc", {
   openapi: "3.0.0",
@@ -72,7 +75,10 @@ app.notFound((c) => {
 console.log(`🚀 HabitGuard API starting on port ${env.PORT}`);
 console.log(`📖 API Docs: http://localhost:${env.PORT}/api/reference`);
 
+startStreakCronJob();
+
 export default {
+  hostname: "0.0.0.0",
   port: env.PORT,
   fetch: app.fetch,
 };
