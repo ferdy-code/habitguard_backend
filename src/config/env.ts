@@ -5,7 +5,7 @@ const envSchema = z.object({
   JWT_SECRET: z.string().min(1),
   JWT_REFRESH_SECRET: z.string().min(1),
   GEMINI_API_KEY: z.string().min(1),
-  PORT: z.coerce.number().default(4000),
+  PORT: z.coerce.number().default(8000),
 });
 
 export type Env = z.infer<typeof envSchema>;
