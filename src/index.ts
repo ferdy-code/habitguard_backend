@@ -8,7 +8,9 @@ import authRoutes from "./routes/auth.routes";
 import habitsRoutes from "./routes/habits.routes";
 import screenTimeRoutes from "./routes/screen-time.routes";
 import focusRoutes from "./routes/focus.routes";
+import summariesRoutes from "./routes/summaries.routes";
 import { startStreakCronJob } from "./jobs/streak-calculator";
+import { startDailySummaryCron } from "./jobs/daily-summary";
 
 const app = new OpenAPIHono();
 
@@ -40,6 +42,7 @@ app.route("/api/v1/auth", authRoutes);
 app.route("/api/v1/habits", habitsRoutes);
 app.route("/api/v1/screen-time", screenTimeRoutes);
 app.route("/api/v1/focus-sessions", focusRoutes);
+app.route("/api/v1/summaries", summariesRoutes);
 
 app.doc("/api/doc", {
   openapi: "3.0.0",
@@ -80,6 +83,7 @@ console.log(`🚀 HabitGuard API starting on port ${env.PORT}`);
 console.log(`📖 API Docs: http://localhost:${env.PORT}/api/reference`);
 
 startStreakCronJob();
+startDailySummaryCron();
 
 export default {
   hostname: "0.0.0.0",
