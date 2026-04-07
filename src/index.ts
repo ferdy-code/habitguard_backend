@@ -6,6 +6,7 @@ import { env } from "./config/env";
 import { errorHandler } from "./middleware/error-handler";
 import authRoutes from "./routes/auth.routes";
 import habitsRoutes from "./routes/habits.routes";
+import screenTimeRoutes from "./routes/screen-time.routes";
 import { startStreakCronJob } from "./jobs/streak-calculator";
 
 const app = new OpenAPIHono();
@@ -36,6 +37,7 @@ app.openAPIRegistry.registerComponent("securitySchemes", "bearerAuth", {
 
 app.route("/api/v1/auth", authRoutes);
 app.route("/api/v1/habits", habitsRoutes);
+app.route("/api/v1/screen-time", screenTimeRoutes);
 
 app.doc("/api/doc", {
   openapi: "3.0.0",
